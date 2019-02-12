@@ -1,0 +1,53 @@
+body {
+  background-color: #0400ffa1;
+  color: #F5F5F5;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#header, #sub-header, .session-timer-container, .session-controls-container {
+  display: flex;
+  justify-content: center;
+}
+
+#sub-header{
+  flex-direction: row;
+}
+
+.break-length-container, .session-length-coantainer {
+  padding: 3em;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button {
+  margin: 1em;
+}
+
+span {
+  font-size: 2em;
+}
+
+.session-timer-container {
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 25px;
+  width: 20em;
+  margin: 1em;
+}
+
+#time-left {
+  font-size: 4em;
+}
+
+

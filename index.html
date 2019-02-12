@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="header"><h1>Pomodoro Clock</h1></div>
+      <div id="sub-header">
+        <div class="break-length-container">
+          <h2 id="break-label">Break Length</h2>
+          <div class="button-container">
+            <button class="button" id="break-increment">
+              up
+            </button>
+            <span id="break-length">
+              5
+            </span>
+            <button class="button" id="break-decrement">down</button>
+          </div>
+        </div>
+        <div class="session-length-coantainer">
+          <h2 class="time-type" id="session-label">Session Length</h2>
+          <div class="button-container">
+            <button class="button" id="session-increment">
+              up
+            </button>
+            <span id="session-length">
+              25
+            </span>
+            <button class="button" id="session-decrement">down</button>
+          </div>
+        </div>
+      </div>
+      <div class="session-timer-container">
+        <h3 id="timer-label">Session Time</h3>
+        <span id="time-left">25:00</span>
+      </div>
+      <div class="session-controls-container">
+        <button class="button" id="start_stop">Play/Pause</button>
+        <button class="button" id="reset">Reset</button>
+      </div>
+    </div>
+    <script src="javascript.js" async defer></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
