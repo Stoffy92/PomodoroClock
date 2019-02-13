@@ -1,177 +1,159 @@
-console.log("JavaScript Loaded!");
+// Global Variables
 
-// var pomodoro = {
-//     init: function init() {
-//         this.buttonVariables();
-//         this.updateValues();
-//         this.bindEvents();
-//     }
+let sessionLength = 25; // Default Timer Length
+let sessionSecond = 0;
 
-// }
+let breakLength = 5; // Default Timer Length
+let breakSecond = 0;
 
-// buttonVariables: function buttonVariables() {
-//     // Buttons
-//     var breakIncrease = document.getElementById("break-increment"); // Increase Break Timer
-//     var breakDecrease = document.getElementById("break-decrement"); // Decrease Break Timer
+let currentMin = sessionLength; // Values used for pause and reset
+let currentSec = sessionSecond;
 
-//     var sessionIncrease = document.getElementById("session-increment"); // Increase Session Timer
-//     var sessionDecrease = document.getElementById("session-decrement"); // Decrease Session TImer
+let isTicking = false; // Timer not running by default
+let session = true; // Check if session or break
+let sessionInterval; // Variable to hold interval, counts timer down
 
-//     var sessionToggle = document.getElementById("start_stop"); // Play/Pause Session
-//     var sessionReset = document.getElementById("reset"); // Reset Session
-// }
-
-// updateValues: function updateValues() { // Change HTML values to current values
-//     pomodoro.breakLengthTimer.innerHTML = this.breakLengthTimer;
-// }
-
-// // Timer Display
-// var breakLengthTimer = document.getElementById("break-length"); // Break Time Length
-// var sessionLengthTimer = document.getElementById("session-length"); // Sesssion Time Length
-// var sessionCountdown = document.getElementById("time-left"); // Session Time Left
-
-// // Default Length values
-// this.sessionCountdown = 25;
-// this.sessionLengthTimer = 25;
-// this.breakLengthTimer = 5;
-
-// // Binding
-// bindEvents: function bindEvents() {
-//     this.breakIncrease.onClick = pomodoro.breakIncrease;
-//     this.breakDecrease.onClick = pomodoro.breakDecrease;
-// }
-
-// breakIncrease: function breakIncrease() {
-//     if (pomodoro.breakLengthTimer < 30){
-//         pomodoro.breakLengthTimer += 1;
-//         pomodoro.updateValues();
-//     }
-// }
-// pomodoro.init();
-
+// Eventlisteners 
 $(document).ready(function() {
-  // Run jQuery onload
-
-  // Selecting Elements
-  var breakLength = parseInt($("#break-length").html()); // Turn string into Int
-  var sessionLength = parseInt($("#session-length").html()); // Turn string into Int
-
-  var sessionLength = 25; // Default Session Length
-  var breakLength = 5; // Default Break Length
-  var countdown = 0; // Used to set/clear interval
-  var seconds = 0; 
-
-  // Binding Click Events
-  
-  $("#break-increment").click(function() {
-    // Increase Break length on click
-    if (breakLength < 60) {
-      // Set max limit on Break
-      breakLength += 1; // Increase int by value of 1
-      $("#break-length").html(breakLength); // Change HTML value
-    }
-  });
-
-  $("#break-decrement").click(function() {
-    // Decrease Break length on click
-    if (breakLength > 1) {
-      // Stop break going into negative
-      breakLength -= 1; // Decrease int by value of 1
-      $("#break-length").html(breakLength); // Change HTML value
-    }
-  });
-
-  $("#session-increment").click(function() {
-    // Increase Session length on click
-    if (sessionLength < 60) {
-      // Set max limit on
-      sessionLength += 1; // Increase int by value of 1P
-      $("#session-length").html(sessionLength); // Change HTML value
-      $("#time-left").html(sessionLength + ":0" + seconds); // Reflect Value Change
-    }
-  });
-
-  $("#session-decrement").click(function() {
-    // Increase Session length on click
-    if (sessionLength > 1) {
-      // Set max limit on
-      sessionLength -= 1; // Increase int by value of 1
-      $("#session-length").html(sessionLength); // Change HTML value
-      $("#time-left").html(sessionLength + ":0" + seconds); // Reflect Value change
-    }
-  });
-
- 
-
-  $("#start_stop").click(function() {
-    // seconds = 0; // sets global variable to 0, then passes to new function
-    sessionCountdown(sessionLength, seconds);
-  });
-
-  function sessionCountdown(minutes, seconds) {
-    countTimer = setInterval(function() {
-      if (minutes === 0 && seconds === 0) {
-        // when minutes and seconds reach 0, stop timer
-        clearInterval(countTimer);
-        if (countdown === 0) {
-          timeLeft = breakLength;
-          countdown += 1;
-          $("#timer-label").html("Break Time Left");
-        } else {
-          timeLeft = sessionLength;
-          countdown -= 1;
-          $("#timer-label").html("Session Time Left");
-        }
-        sessionCountdown(timeLeft, 0);
-      } else if (seconds != 0) {
-        if (seconds <= 10) {
-          seconds -= 1;
-          timeLeft = minutes + ":0" + seconds;
-        } else {
-          seconds -= 1;
-          timeLeft = minutes + ":" + seconds;
-        }
-      } else if (seconds === 0) {
-        seconds = 59;
-        minutes -= 1;
-        timeLeft = minutes + ":" + seconds;
+  $("#break-decrement").click(function(e) {
+    e.preventDefault();
+    if (!isTicking) {
+      // Check if clock is running before decreasing increments
+      let count = parseInt($("#break-length").text()); //
+      if (count > 1) {
+        // Stops breakLength going into negative
+        count--;
       }
-      $("#time-left").html(timeLeft);
-    }, 1000);
+      breakLength = count; // set breakLength to value of count
+      $("#break-length").text(count); // Update DOM
+    }
+  });
+
+  $("#break-increment").click(function(e) {
+    e.preventDefault();
+    if (!isTicking) {
+      // clock is not ticking, you may add increments
+      let count = parseInt($("#break-length").text());
+      count++;
+      breakLength = count; // set breakLength to value of count
+      $("#break-length").text(count); // Update DOM with new value
+    }
+  });
+
+  $("#session-increment").click(function(e) {
+    e.preventDefault();
+    if (!isTicking) {
+      // clock is not ticking, you may add increments
+      let count = parseInt($("#session-min").text());
+      if (count < 60) {
+        count++;
+      }
+      $("#session-min").text(count); // Update DOM with new value
+      $("#session-length").text(count); // Update DOM with new value
+      sessionLength = count; // set sessionLength to value of count
+      reset(); //
+    }
+  });
+
+  $("#session-decrement").click(function(e) {
+    e.preventDefault();
+    if (!isTicking) {
+      // clock is not ticking, you may add increments
+      let count = parseInt($("#session-min").text());
+      if (count > 1) { // sessionLength won't go below 1
+        count--;
+      }
+      $("#session-min").text(count); // Update DOM
+      $("#session-length").text(count); // Update DOM
+      sessionLength = count; // set sessionLength to value of count
+      reset();
+    }
+  });
+
+  $("#start").click(function(e) {
+    e.preventDefault();
+    changeIcon(); // Changes icon and starts timer
+  });
+
+  $("#reset").click(function(e) {
+    e.preventDefault();
+    if (!isTicking) { // Stops timer from being reset unless paused
+      reset();
+    }
+  });
+
+  function startTimer() {
+    changeState();
+    $(".reset").addClass("disabled");
+    let min = currentMin; // Get session length value
+    let sec = currentSec; // currentMin & currentSec values are saved when stopTimer is called
+    sessionInterval = setInterval(function() {
+      changeState(); // timer is starting, change session = true
+      if (sec > 0) {
+        sec--; // if sec is more than 0, - 1
+        if (sec < 10) {
+          $("#session-sec").text("0" + sec); // if seconds are less than 10, display 0 for cleaner format
+        } else {
+          $("#session-sec").text(sec);
+        }
+      } else {
+        min--; // when sec reaches 0, decrement 1 min 
+        sec = 59;
+        $("#session-sec").text(sec);
+        $("#session-min").text(min);
+      }
+
+      if (min === 0 && sec === 0) { // when min and sec reach 0, set session to true or false
+        if (session) {
+          session = false; // when mins and sec reach 0, set session to false and use break values
+          min = breakLength;
+          sec = breakSecond;
+        } else {
+          session = true; // when mins and sec reach 0, set session to true and use session values
+          min = sessionLength;
+          sec = sessionSecond;
+        }
+      }
+    }, 1000); // This block of code will run every 1000ms
   }
 
-  $("#reset").click(function() {
-    sessionLength = 25; // Reset to default
-    breakLength = 5; // Reset to default
-    seconds = 0;
-    $("#session-length").html(sessionLength);
-    $("#time-left").html(sessionLength + ":0" + seconds);
-    $("#break-length").html(breakLength);
-    console.log(sessionLength);
-  })
+  function stopTimer() {
+    clearInterval(sessionInterval); // Clears interval 
+    currentMin = parseInt($("#session-min").text()); // show paused vaulues
+    currentSec = parseInt($("#session-sec").text()); // show paused vaulues
+    $("#timer-label").text("Session paused"); // let the user know that the session is paused
+    $(".reset").removeClass("disabled"); // when timer stops, buttons are no longer disabled
+  }
+
+  function reset() {
+    currentSec = 0;
+    currentMin = sessionLength; // gives startTimer function an updated value of sessionLength
+    session = true; // Reset the session to default state
+    $("#session-sec").text("00"); // show updated values
+    $("#session-min").text(currentMin); // reset to default value
+  }
+
+  function changeIcon() { // Toggle function for better UX/UI
+    if (isTicking) {
+      $("#start .fa").removeClass("fa-pause");
+      $("#start .fa").addClass("fa-play");
+      isTicking = false; // clock is not ticking, show play symbol
+      stopTimer(); // clock is not ticking by default
+    } else {
+      $("#start .fa").removeClass("fa-play");
+      $("#start .fa").addClass("fa-pause");
+      isTicking = true; // clock is ticking, show pause symbol
+      startTimer(); // start timer
+    }
+  }
+
+  function changeState() {
+    
+    if (session) {  // show text based on session
+      $("#timer-label").text("Get Working!"); 
+    } else {
+      $("#timer-label").text("Break Time");
+    }
+  }
 });
 
-// struggle session length was changing but countdown timer started from
-
-// $("#start_stop").click(function() {
-//   var sessionCountdown = setInterval(sessionTimer, 1000); // Run this function every 1 second
-
-//   function sessionTimer() {
-//     sessionCountdownTimer -= 1;
-//     $("#time-left").html(sessionCountdownTimer);
-//     if (sessionCountdownTimer === 0) {
-//       clearInterval(sessionCountdown); // When countdown reaches 0, stop
-//       var breakCountdown = setInterval(breakTimer, 1000);
-//     }
-//     $("#time-left").html(sessionCountdownTimer);
-
-//     function breakTimer() {
-//       $("#session-label").html("Break");
-//       $("#break-length").show();
-//       breakCount -= 1;
-//       if (breakCount === 0) {
-//         clearInterval(breakCountdown);
-//       }
-//     }
-//   }
-// });
