@@ -1,24 +1,82 @@
+
 body {
-  background-color: #0400ffa1;
-  color: #F5F5F5;
+  color: #f5f5f5;
+}
+
+html {
+  height: 100%;
+  background: #ffffff;
+  background: -moz-linear-gradient(
+    -45deg,
+    #ffffff 0%,
+    #ffffff 50%,
+    #fadad8 50%,
+    #fadad8 100%
+  );
+  background: -webkit-gradient(
+    left top,
+    right bottom,
+    color-stop(0%, #ffffff),
+    color-stop(50%, #ffffff),
+    color-stop(50%, #fadad8),
+    color-stop(100%, #fadad8)
+  );
+  background: -webkit-linear-gradient(
+    -45deg,
+    #ffffff 0%,
+    #ffffff 50%,
+    #fadad8 50%,
+    #fadad8 100%
+  );
+  background: -o-linear-gradient(-45deg, #ffffff 0%, #ffffff 50%, #fadad8 50%);
+  background: -ms-linear-gradient(
+    -45deg,
+    #ffffff 0%,
+    #ffffff 50%,
+    #fadad8 50%,
+    #fadad8 100%
+  );
+  background: linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 50%,
+      #fadad8 50%,
+      #fadad8 100%
+    ),
+    linear-gradient(45deg, #fff 0%, #fff 50%, #fff1ff 50%, #fff1ff 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#f3fcfc", GradientType=1);
+  font-family: "Roboto", sans-serif;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
-#header, #sub-header, .session-timer-container, .session-controls-container {
+#header,
+#sub-header,
+.session-timer-container,
+.session-controls-container {
   display: flex;
   justify-content: center;
 }
 
-#sub-header{
+#header,
+#sub-header {
+  color: #ff000063;
+}
+
+#sub-header {
   flex-direction: row;
 }
 
-.break-length-container, .session-length-coantainer {
+#session-length, #break-length {
+  font-size: 2em;
+}
+
+.break-length-container,
+.session-length-coantainer {
   padding: 3em;
 }
 
@@ -29,25 +87,45 @@ body {
 }
 
 .button {
-  margin: 1em;
+  color: #8a817f;
+  font-size: 2em;
 }
 
-span {
-  font-size: 2em;
+
+.clock-time {
+  font-size: 3.5em;
 }
 
 .session-timer-container {
   flex-direction: column;
   align-self: center;
   align-items: center;
-  border: 1px solid black;
-  border-radius: 25px;
-  width: 20em;
-  margin: 1em;
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  background: #ff7360;
 }
 
 #time-left {
+  color: #af4a4a;
   font-size: 4em;
+  letter-spacing: 5px;
 }
 
 
+
+.session-controls-container {
+  margin-top: 3em;
+}
+
+#timer-label{
+  color: #fbcaca;
+  letter-spacing: 5px;
+}
+
+#start, #reset {
+  font-size: 1.5em;
+  margin-left: 35px;
+  margin-right: 35px;
+  color: #fff;
+}
