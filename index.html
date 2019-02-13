@@ -11,6 +11,12 @@
     <title></title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -20,42 +26,49 @@
         <div class="break-length-container">
           <h2 id="break-label">Break Length</h2>
           <div class="button-container">
-            <button class="button" id="break-increment">
-              up
-            </button>
+            <a href="#" class="button" id="break-increment">
+              <i class="fas fa-chevron-up"></i>
+            </a>
             <span id="break-length">
               5
             </span>
-            <button class="button" id="break-decrement">down</button>
+            <a href="#" class="button" id="break-decrement">
+              <i class="fas fa-chevron-down"></i>
+            </a>
           </div>
         </div>
         <div class="session-length-coantainer">
           <h2 class="time-type" id="session-label">Session Length</h2>
           <div class="button-container">
-            <button class="button" id="session-increment">
-              up
-            </button>
+              <a href="#" class="button" id="session-increment">
+                  <i class="fas fa-chevron-up"></i>
+                </a>
             <span id="session-length">
               25
             </span>
-            <button class="button" id="session-decrement">down</button>
+            <a href="#" class="button" id="session-decrement">
+                <i class="fas fa-chevron-down"></i>
+              </a>
           </div>
         </div>
       </div>
       <div class="session-timer-container">
         <h3 id="timer-label">Session Time</h3>
-        <span id="time-left">25:00</span>
-      </div>
-      <div class="session-controls-container">
-        <button class="button" id="start_stop">Play/Pause</button>
-        <button class="button" id="reset">Reset</button>
+        <div class="clock-time">
+          <span id="session-min">25</span> :
+          <span id="session-sec">00</span>
+        </div>
+        <div class="session-controls-container">
+          <a href="#" id="start"><i class="fa fa-play"></i></a>
+          <a href="#" id="reset"><i class="fa fa-undo"></i></a>
+        </div>
       </div>
     </div>
-    <script src="javascript.js" async defer></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"
     ></script>
+    <script src="javascript.js" async defer></script>
   </body>
 </html>
